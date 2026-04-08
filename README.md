@@ -69,6 +69,10 @@ python app.py
 # Running on http://127.0.0.1:5050
 ```
 
+*USERNAME*: provider_demo
+
+*PASSWORD*: Silna2024!
+
 **Terminal 2 — Run the agent:**
 ```bash
 python agent/pa_agent.py
