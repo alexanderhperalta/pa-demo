@@ -106,17 +106,6 @@ After submission, a second agent flow re-authenticates, navigates to the status 
 
 In production this would run on a cron schedule or event trigger rather than sequentially in the same process. The 5-second delay in the demo is a stand-in for that interval, making the two-phase structure explicit without requiring a scheduler.
 
-## Mapping to Key Responsibilities
-
-| Responsibility | How This Project Addresses It |
-|---|---|
-| Extract structured information from healthcare documents using OCR and agentic AI | `doc_intel/extractor.py` uses Claude to extract 8 typed fields from an ABA treatment plan PDF |
-| End-to-end deployment of browser agents for web-based workflows | `agent/pa_agent.py` automates a complete PA submission workflow using Playwright |
-| Translate healthcare workflows into clear technical specifications | The mock portal required modeling real PA workflow steps, form fields, and payer logic |
-| Analyze model outputs for accuracy and identify areas for improvement | The dashboard tracks extraction accuracy, token usage, and step-level agent success |
-| Create documentation and playbooks for reproducible prompt strategies | `EXTRACTION_PROMPT` in `extractor.py` is a documented, version-controlled prompt template |
-| Measure and evaluate progress with clearly defined metrics | Dashboard surfaces: total time, steps logged, fields extracted, PA reference confirmation |
-
 ## Technologies
 
 - **Python 3.13** with Flask, Playwright, Anthropic SDK
