@@ -57,8 +57,8 @@ playwright install chromium
 echo "ANTHROPIC_API_KEY=your_key_here" > .env
 
 # Add portal credentials to .env
-echo "PORTAL_USERNAME=provider_demo" >> .env
-echo "PORTAL_PASSWORD=your_password_here" >> .env
+echo "PORTAL_USERNAME=provider_demo" >> .env # Use provider_demo
+echo "PORTAL_PASSWORD=your_password_here" >> .env # Use Demo!
 
 # Generate the sample treatment plan PDF
 python sample_docs/generate_treatment_plan.py
