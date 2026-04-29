@@ -20,8 +20,7 @@ treatment plan document.
 
 Return ONLY a valid JSON object with exactly these keys. If a field is not found, use null.
 
-{
-  "patient_name": "Full legal name of the patient",
+{"patient_name": "Full legal name of the patient",
   # Normalize to YYYY-MM-DD regardless of how the date appears in the document
   "dob": "Date of birth in YYYY-MM-DD format",
   "diagnosis_code": "Primary ICD-10 diagnosis code only (e.g. F84.0)",
@@ -33,17 +32,18 @@ Return ONLY a valid JSON object with exactly these keys. If a field is not found
   "payer": "Insurance payer name",
   "auth_period": "Requested authorization period",
   "medical_necessity_summary": "2-3 sentence summary of the medical necessity justification",
-  "primary_treatment_goal": "The single most important 90-day treatment goal"
-}
+  "primary_treatment_goal": "The single most important 90-day treatment goal"}
 
 Return only the JSON object. No markdown, no explanation, no code fences."""
 
 
+# Load in the pdf as unstructured text to be extracted
 def load_pdf_as_base64(pdf_path: str) -> str:
     with open(pdf_path, "rb") as f:
         return base64.standard_b64encode(f.read()).decode("utf-8")
 
 
+# Uses the Messages API to extract fields from a pdf
 def extract_fields(pdf_path: str) -> dict:
     """Send PDF to Claude and extract structured PA fields."""
     print(f"  Loading PDF: {pdf_path}")
@@ -52,29 +52,23 @@ def extract_fields(pdf_path: str) -> dict:
     pdf_data = load_pdf_as_base64(pdf_path)
 
     print("  Sending to Claude for extraction...")
+    # Use the Messages API
     response = client.messages.create(
         model="claude-sonnet-4-20250514",
         max_tokens=1024,
         messages=[
-            {
-                "role": "user",
-                "content": [
-                    {
+            {"role": "user",
+             "content": [{
                         "type": "document",
                         "source": {
                             "type": "base64",
                             "media_type": "application/pdf",
-                            "data": pdf_data,
-                        },
-                    },
+                            "data": pdf_data,},
+                            },
                     {
                         "type": "text",
-                        "text": EXTRACTION_PROMPT,
-                    },
-                ],
-            }
-        ],
-    )
+                        "text": EXTRACTION_PROMPT, # The Messages API knows which fields to look for because of EXTRACTION_PROMPT
+                    },],}],)
 
     elapsed = round(time.time() - start, 2)
     raw_text = response.content[0].text.strip()
@@ -94,8 +88,7 @@ def extract_fields(pdf_path: str) -> dict:
             "input_tokens": response.usage.input_tokens,
             "output_tokens": response.usage.output_tokens,
             "elapsed_seconds": elapsed,
-        },
-    }
+        },}
 
     return result
 
