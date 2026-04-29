@@ -6,3 +6,5 @@ __pycache__/
 outputs/agent_run.json
 portal/storage.json
 sample_docs/treatment_plan.pdf
+.DS_Store
+.Rhistory
