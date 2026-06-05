@@ -3,8 +3,10 @@ silna/
 __pycache__/
 *.pyc
 .env
-outputs/agent_run.json
+outputs/
 portal/storage.json
 sample_docs/treatment_plan.pdf
+sample_docs/cases
+doc_intel/__pycache__
 .DS_Store
 .Rhistory
